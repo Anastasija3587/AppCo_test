@@ -1,5 +1,3 @@
-const users = require('../db/users.json');
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
@@ -16,14 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       gender: DataTypes.STRING,
       ip_address: DataTypes.STRING,
     },
-    {},
+    {
+      timestamps: false,
+    },
   );
-  User.bulkCreate(users)
-    .then(() => {
-      console.log('Connection to database established success');
-    })
-    .catch(err => {
-      console.log('Error', err);
-    });
+  User.associate = models => {
+    User.hasMany(models.Statistic, {foreignKey: 'user_id'});
+  };
   return User;
 };

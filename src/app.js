@@ -1,32 +1,29 @@
 const express = require('express');
 const corsMiddleware = require('cors');
-const {Sequelize, DataTypes} = require('sequelize');
-const User = require('../models/user');
-const Statistics = require('../models/statistics');
+const db = require('./models/index');
+const usersRouters = require('./app/user/controller');
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
-async function start() {
-  try {
-    const connection = await new Sequelize('database', 'root', null, {
-      host: 'localhost',
-      dialect: 'sqlite',
-      storage: 'database.sqlite',
-    });
+function start() {
+  app.use(express.json());
+  app.use(corsMiddleware());
 
-    await User(connection, DataTypes).sync();
-    await Statistics(connection, DataTypes).sync();
+  // Add all routers
+  app.use('/api/users', usersRouters.getAll);
 
-    app.use(express.json());
-    app.use(corsMiddleware());
+  // If route doesn't find
+  app.use('*', (req, res) => {
+    res.status(404).json('Error 404!');
+  });
 
+  db.sequelize.sync().then(() => {
+    console.log('SQLite is connection');
     app.listen(port, () => {
       console.log(`Server started on port ${port}`);
     });
-  } catch (err) {
-    console.log(err);
-  }
+  });
 }
 
 module.exports = start;

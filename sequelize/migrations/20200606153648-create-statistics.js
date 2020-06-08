@@ -1,10 +1,15 @@
+const statistics = require('../data/statistics.json');
+
 module.exports = {
-  up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Statistics', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Statistics', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      user_id: {
         type: Sequelize.INTEGER,
       },
       date: {
@@ -16,14 +21,13 @@ module.exports = {
       clicks: {
         type: Sequelize.INTEGER,
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-    }),
+    });
+
+    try {
+      await queryInterface.bulkInsert('Statistics', statistics);
+    } catch (e) {
+      console.log(e);
+    }
+  },
   down: (queryInterface, Sequelize) => queryInterface.dropTable('Statistics'),
 };

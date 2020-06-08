@@ -1,6 +1,8 @@
+const users = require('../data/users.json');
+
 module.exports = {
-  up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Users', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -22,14 +24,13 @@ module.exports = {
       ip_address: {
         type: Sequelize.STRING,
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-    }),
+    });
+
+    try {
+      await queryInterface.bulkInsert('Users', users);
+    } catch (e) {
+      console.log(e);
+    }
+  },
   down: (queryInterface, Sequelize) => queryInterface.dropTable('Users'),
 };
