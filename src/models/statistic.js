@@ -3,7 +3,9 @@ module.exports = (sequelize, DataTypes) => {
     'Statistic',
     {
       user_id: DataTypes.INTEGER,
-      date: DataTypes.DATE,
+      date: {
+        type: 'DATE',
+      },
       page_views: DataTypes.INTEGER,
       clicks: DataTypes.INTEGER,
     },

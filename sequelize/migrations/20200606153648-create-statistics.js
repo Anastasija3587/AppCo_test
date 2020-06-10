@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       date: {
-        type: Sequelize.DATE,
+        type: 'DATE',
       },
       page_views: {
         type: Sequelize.INTEGER,
@@ -29,5 +29,5 @@ module.exports = {
       console.log(e);
     }
   },
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Statistics'),
+  down: queryInterface => queryInterface.dropTable('Statistics'),
 };

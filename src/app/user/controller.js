@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 const models = require('../../models/index');
 
 module.exports = {
@@ -7,10 +8,17 @@ module.exports = {
       offset: (req.query.page - 1) * 50,
       include: [models.Statistic],
     })
-      .then(users => res.json(users))
+      .then(user => res.json(user))
       .catch(err => res.status(404).json(err));
   },
   getById(req, res) {
-    // models.User.findById()
+    const {id} = req.params;
+    models.User.findAll({
+      where: {id},
+      include: [models.Statistic],
+      attributes: ['first_name', 'last_name'],
+    })
+      .then(user => res.json(user))
+      .catch(err => res.status(404).json(err));
   },
 };

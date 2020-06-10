@@ -1,7 +1,7 @@
 const express = require('express');
 const corsMiddleware = require('cors');
 const db = require('./models/index');
-const usersRouters = require('./app/user/controller');
+const usersRouters = require('./app/user');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -11,7 +11,7 @@ function start() {
   app.use(corsMiddleware());
 
   // Add all routers
-  app.use('/api/users', usersRouters.getAll);
+  app.use('/api/users', usersRouters);
 
   // If route doesn't find
   app.use('*', (req, res) => {
