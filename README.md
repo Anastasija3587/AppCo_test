@@ -1,4 +1,8 @@
-Project that involve using Node.js, Express, Sequelize.
+[I'm link to app. Let's watch](https://anastasiia-appco.herokuapp.com/)
+
+Project that involve using Node.js, Express, Sequelize. 
+
+FrontEnd (https://github.com/Anastasija3587/AppCo-front-test) that involve using React.js, SCSS.
 
 Usage
 
